@@ -3,86 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloud Compliance Report Generator - Login</title>
+    <title>Cloud Compliance & Hacker Telemetry Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            background-color: #030712;
-            background-image: 
-                radial-gradient(circle at 70% 30%, rgba(0, 149, 255, 0.15) 0%, transparent 60%),
-                linear-gradient(to bottom, #020617, #030712);
-            font-family: ui-sans-serif, system-ui, sans-serif;
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 15px rgba(56, 189, 248, 0.8), 0 0 30px rgba(59, 130, 246, 0.6); }
+            50% { text-shadow: 0 0 5px rgba(56, 189, 248, 0.4), 0 0 10px rgba(59, 130, 246, 0.3); }
         }
-        .glow-title {
-            color: #ffffff;
-            text-shadow: 0 0 20px rgba(0, 149, 255, 0.6), 0 0 40px rgba(0, 149, 255, 0.3);
-        }
-        .glass-card {
-            background: rgba(10, 15, 30, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(30, 58, 138, 0.4);
+        .glowing-title {
+            animation: glow 3s infinite ease-in-out;
         }
     </style>
 </head>
-<body class="min-h-screen text-white flex flex-col justify-between p-6 lg:p-12">
-    <div class="max-w-7xl mx-auto w-full flex justify-between items-center border-b border-slate-800 pb-4 mb-8">
-        <div class="flex items-center space-x-2">
-            <div class="bg-blue-600 text-white p-1.5 rounded font-black text-sm tracking-widest">AZ</div>
-            <span class="font-bold tracking-wide text-sm text-slate-200">SecOps Cloud Engine</span>
-        </div>
-        <div class="text-xs text-blue-400 font-semibold tracking-wider uppercase bg-blue-950/60 px-3 py-1 rounded-full border border-blue-800/50">
-            Enterprise Security Portal (2026)
-        </div>
-    </div>
+<body class="bg-gray-950 text-gray-100 font-sans p-6 selection:bg-cyan-500 selection:text-black">
 
-    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
-        <div class="lg:col-span-7 space-y-6">
-            <h1 class="glow-title text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-tight">
-                Accelerate Cloud Compliance Without Putting Sensitive Data At Risk
+    <div class="max-w-7xl mx-auto space-y-6">
+        <!-- Header with Glowing Animation -->
+        <div class="text-center py-2">
+            <h1 class="text-4xl font-black tracking-wider text-white glowing-title">
+                Cloud Compliance & Attacker Telemetry Engine
             </h1>
-            <div class="pt-2">
-                <p class="text-slate-300 font-medium text-base mb-4">Cloud Compliance Report Generator helps you:</p>
-                <ul class="space-y-3 text-slate-300 text-sm">
-                    <li class="flex items-center space-x-3"><span class="text-blue-400 font-bold">✓</span><span><b>Advanced Audit Trails:</b> Instant report generation & telemetry logs</span></li>
-                    <li class="flex items-center space-x-3"><span class="text-blue-400 font-bold">✓</span><span><b>Automated Remediation:</b> One-click AI Auto-Fix for security misconfigurations</span></li>
-                    <li class="flex items-center space-x-3"><span class="text-blue-400 font-bold">✓</span><span><b>Real-Time Guardrails:</b> Live policy enforcement and threat blocking</span></li>
-                    <li class="flex items-center space-x-3"><span class="text-blue-400 font-bold">✓</span><span><b>Data Loss Prevention (DLP):</b> Detect and block sensitive API key leaks instantly</span></li>
-                </ul>
+            <p class="text-xs text-gray-400 mt-1 uppercase tracking-widest font-medium">Enterprise Security Governance & Live HUD Watchdog (2026 Edition)</p>
+        </div>
+
+        <!-- Status Bar with Functional Buttons -->
+        <div class="flex justify-between items-center bg-gray-900 border border-gray-800 p-4 rounded-xl shadow-xl">
+            <span class="flex items-center text-green-400 text-sm font-medium">
+                <span class="h-3 w-3 bg-green-500 rounded-full inline-block mr-2 animate-pulse shadow-[0_0_10px_#22c55e]"></span>
+                Background Watchdog: Active (Real-Time 3s Sync)
+            </span>
+            <div class="space-x-2">
+                <button id="alert-btn" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3.5 py-1.5 rounded-lg font-semibold transition shadow cursor-pointer">Enable Chrome Alerts</button>
+                <button id="hud-btn" class="bg-red-950 hover:bg-red-900 text-red-300 border border-red-800 text-xs px-3.5 py-1.5 rounded-lg font-semibold transition shadow cursor-pointer">Toggle Watch Guard HUD</button>
             </div>
         </div>
 
-        <div class="lg:col-span-5">
-            <div class="glass-card p-8 rounded-2xl shadow-2xl space-y-4">
-                <h2 class="text-2xl font-bold text-white mb-1">Sign In to Dashboard</h2>
-                <p class="text-xs text-slate-400 mb-4">Enter enterprise administrator credentials.</p>
+        <!-- Quick Azure Blade Simulator (Demo Control) -->
+        <div class="bg-gray-900 border border-gray-800 p-4 rounded-xl flex justify-between items-center shadow-xl">
+            <span class="text-xs font-bold text-yellow-400 flex items-center">
+                ⚡ Quick Azure Blade Simulator (Demo Control):
+            </span>
+            <div class="space-x-2">
+                <button id="sim-monitor" class="bg-gray-800 hover:bg-gray-700 text-cyan-400 border border-gray-700 text-xs px-3.5 py-1.5 rounded-lg font-medium transition shadow cursor-pointer">+ Open Azure Monitor</button>
+                <button id="sim-entra" class="bg-gray-800 hover:bg-gray-700 text-cyan-400 border border-gray-700 text-xs px-3.5 py-1.5 rounded-lg font-medium transition shadow cursor-pointer">+ Open Entra ID</button>
+                <button id="sim-vm" class="bg-gray-800 hover:bg-gray-700 text-cyan-400 border border-gray-700 text-xs px-3.5 py-1.5 rounded-lg font-medium transition shadow cursor-pointer">+ Open Virtual Machines</button>
+            </div>
+        </div>
+
+        <!-- Metrics Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Compliance Score</p>
+                <div class="flex items-baseline mt-1">
+                    <h2 class="text-3xl font-black text-green-400">92.5%</h2>
+                    <span class="ml-2 text-xs text-gray-400 font-medium">Monitored</span>
+                </div>
+                <p class="text-[10px] text-gray-500 mt-1 font-mono">Live Azure Sync</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Scanned Resources</p>
+                <h2 class="text-3xl font-black text-cyan-400 mt-1">3</h2>
+                <p class="text-[10px] text-gray-500 mt-1 font-mono">Active Cloud Assets</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Critical Vulnerabilities</p>
+                <h2 class="text-3xl font-black text-red-400 mt-1">1</h2>
+                <p class="text-[10px] text-gray-500 mt-1 font-mono">Watchdog Alert Active</p>
+            </div>
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Security Framework</p>
+                <h2 class="text-xl font-black text-purple-400 mt-2">CIS & NIST 2026</h2>
+                <p class="text-[10px] text-gray-500 mt-1 font-mono">Standard Benchmarks</p>
+            </div>
+        </div>
+
+        <!-- 🔥 NEW: Red & Dark Blue Intelligence Sections (Side-by-Side) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- 🔴 Red Section: Live Attacker / Hacker Navigation Stream (HUD Readings & Timestamps) -->
+            <div class="bg-red-950/20 border border-red-600/60 p-5 rounded-xl shadow-2xl backdrop-blur-md">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-md font-bold text-red-400 flex items-center">🚨 Red Section: Live Attacker Telemetry Log</h3>
+                    <span class="text-xs bg-red-900 text-red-200 px-2.5 py-0.5 rounded font-mono">Hacker Path & Timestamp</span>
+                </div>
+                <p class="text-xs text-gray-300 mb-3">Tracks exact navigation path, timestamps, and active session telemetry while interacting with Azure portal.</p>
+                <div id="red-telemetry-list" class="space-y-2 text-xs">
+                    <!-- Dynamically populated attacker logs -->
+                </div>
+            </div>
+
+            <!-- 🔵 Dark Blue Section: Threat Intelligence & Data Leakage Impact Analysis -->
+            <div class="bg-blue-950/20 border border-blue-600/60 p-5 rounded-xl shadow-2xl backdrop-blur-md">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-md font-bold text-blue-400 flex items-center">🛡️ Blue Section: Data Leakage Impact Analysis</h3>
+                    <span class="text-xs bg-blue-900 text-blue-200 px-2.5 py-0.5 rounded font-mono">Potential Data at Risk</span>
+                </div>
+                <p class="text-xs text-gray-300 mb-3">Analyzes vulnerable blades opened during the session and maps what sensitive data an attacker could steal.</p>
+                <div id="blue-leakage-list" class="space-y-2 text-xs">
+                    <!-- Dynamically populated impact analysis -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 1 & Section 2 Standard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Section 1: Recently Visited Azure Pages -->
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-md font-bold text-cyan-400">🌐 1. Recently Visited Azure Pages</h3>
+                    <span class="text-xs text-gray-500 font-mono">Portal Navigation</span>
+                </div>
+                <div id="visited-pages-list" class="space-y-2 text-sm"></div>
+            </div>
+
+            <!-- Section 2: Azure Actions Performed -->
+            <div class="bg-gray-900 border border-gray-800 p-5 rounded-xl shadow-xl">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-md font-bold text-green-400">⚡ 2. Azure Actions Performed</h3>
+                    <span class="text-xs text-gray-500 font-mono">Operations Log</span>
+                </div>
+                <div id="performed-actions-list" class="space-y-2 text-sm"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Frontend Interactive Logic Script -->
+    <script>
+        document.getElementById('alert-btn').addEventListener('click', () => {
+            if (!("Notification" in window)) {
+                alert("Browser notifications not supported.");
+            } else if (Notification.permission === "granted") {
+                new Notification("Azure Watchdog", { body: "🚨 Attacker Telemetry Monitoring Active!" });
+            } else {
+                Notification.requestPermission().then(perm => {
+                    if (perm === "granted") {
+                        new Notification("Azure Watchdog", { body: "🚨 Telemetry Monitoring Active!" });
+                    }
+                });
+            }
+        });
+
+        document.getElementById('hud-btn').addEventListener('click', () => {
+            alert("Watch Guard HUD is active and continuously streaming telemetry into Red & Blue intelligence sections!");
+        });
+
+        async function simulateBlade(name) {
+            await fetch("http://127.0.0.1:8000/api/log-activity", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ action: name })
+            });
+            fetchData();
+        }
+
+        document.getElementById('sim-monitor').addEventListener('click', () => simulateBlade('Azure Monitor & Metrics'));
+        document.getElementById('sim-entra').addEventListener('click', () => simulateBlade('Microsoft Entra ID & Governance'));
+        document.getElementById('sim-vm').addEventListener('click', () => simulateBlade('Virtual Machines Dashboard'));
+
+        async function fetchData() {
+            try {
+                let res = await fetch("http://127.0.0.1:8000/api/azure-audit");
+                let data = await res.json();
                 
-                <!-- POST method triggers Chrome Save Password Prompt -->
-                <form action="/dashboard" method="POST" class="space-y-4">
-                    <div>
-                        <label class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">Corporate Email *</label>
-                        <input type="email" name="username" autocomplete="username" placeholder="admin@azure.secops" required 
-                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:border-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">Secure Password *</label>
-                        <input type="password" name="password" autocomplete="current-password" placeholder="••••••••" required 
-                               class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:border-blue-500 focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-semibold text-slate-300 uppercase tracking-wider mb-1">Organization / Department</label>
-                        <input type="text" placeholder="SecOps Cloud Governance" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm text-white focus:border-blue-500 focus:outline-none transition">
-                    </div>
-                    
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 rounded-xl transition duration-200 shadow-lg shadow-blue-600/30 mt-3 text-sm">
-                        Authenticate & Launch Command Center
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+                // Section 1
+                let visitedContainer = document.getElementById('visited-pages-list');
+                if (visitedContainer && data.visited_pages) {
+                    visitedContainer.innerHTML = data.visited_pages.map(item => `
+                        <div class="flex justify-between items-center p-2.5 bg-gray-950 rounded-lg border border-gray-800/80 shadow-inner">
+                            <span class="text-gray-300 flex items-center font-medium">🌐 <span class="ml-2">${item.page}</span></span>
+                            <span class="text-xs text-gray-500 font-mono">${item.date || 'Today'} | ${item.time}</span>
+                        </div>
+                    `).join('');
+                }
 
-    <div class="max-w-7xl mx-auto w-full text-center text-xs text-slate-500 pt-8 mt-auto border-t border-slate-900">
-        Secured with CIS & NIST SP 800-53 Compliance Frameworks. Powered by Python & FastAPI.
-    </div>
+                // Section 2
+                let actionsContainer = document.getElementById('performed-actions-list');
+                if (actionsContainer && data.performed_actions) {
+                    actionsContainer.innerHTML = data.performed_actions.map(act => `
+                        <div class="flex justify-between items-center p-2.5 bg-gray-950 rounded-lg border border-gray-800/80 shadow-inner">
+                            <span class="text-gray-300 flex items-center font-medium">✅ <span class="ml-2">${act.action}</span></span>
+                            <span class="text-xs text-gray-500 font-mono">${act.time}</span>
+                        </div>
+                    `).join('');
+                }
+
+                // 🔴 Red Section: Attacker Telemetry Log
+                let redContainer = document.getElementById('red-telemetry-list');
+                if (redContainer && data.visited_pages) {
+                    redContainer.innerHTML = data.visited_pages.map(item => `
+                        <div class="p-2.5 bg-red-950/40 rounded-lg border border-red-800/60 text-red-200 flex justify-between items-center">
+                            <div>
+                                <span class="font-bold">🎯 Target Blade:</span> ${item.page}<br>
+                                <span class="text-[10px] text-gray-400">Status: Compromised / Accessed via Session</span>
+                            </div>
+                            <span class="text-[10px] bg-red-900 text-white px-2 py-1 rounded font-mono">${item.date || '2026-09-17'} <br>${item.time}</span>
+                        </div>
+                    `).join('');
+                }
+
+                // 🔵 Blue Section: Data Leakage Impact Analysis
+                let blueContainer = document.getElementById('blue-leakage-list');
+                if (blueContainer && data.visited_pages) {
+                    blueContainer.innerHTML = data.visited_pages.map(item => {
+                        let leakage = "General Cloud Infrastructure Telemetry";
+                        if (item.page.toLowerCase().includes("virtual machine") || item.page.toLowerCase().includes("compute")) {
+                            leakage = "🔑 At Risk: SSH Keys, Root Passwords, Env Credentials, Disk Snapshots";
+                        } else if (item.page.toLowerCase().includes("storage")) {
+                            leakage = "📦 At Risk: Blob Storage Blobs, Database Backups, PII Customer Logs";
+                        } else if (item.page.toLowerCase().includes("entra") || item.page.toLowerCase().includes("monitor")) {
+                            leakage = "🛡️ At Risk: IAM Access Tokens, Admin Service Principals, Audit Logs";
+                        }
+                        return `
+                            <div class="p-2.5 bg-blue-950/40 rounded-lg border border-blue-800/60 text-blue-200">
+                                <span class="font-bold text-cyan-300">Target: ${item.page}</span><br>
+                                <span class="text-xs text-yellow-300">${leakage}</span>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+            } catch (e) {
+                console.log("Syncing intelligence feed...");
+            }
+        }
+
+        setInterval(fetchData, 2000);
+        fetchData();
+    </script>
 </body>
 </html>

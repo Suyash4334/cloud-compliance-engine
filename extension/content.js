@@ -1,23 +1,22 @@
-console.log("SecOps Azure Telemetry Bridge Active.");
+console.log("[Azure Watchdog] Risk Analyzer Active.");
 
-// Function to send current Azure page info to chrome storage
-function reportAzureActivity() {
-    const pageTitle = document.title || window.location.pathname;
-    const pageUrl = window.location.href;
-    
-    // Save to chrome local storage so dashboard can read it
-    chrome.storage.local.get({ visitedPages: [] }, function(data) {
-        let pages = data.visitedPages;
-        const newEntry = { title: pageTitle, url: pageUrl, time: new Date().toLocaleTimeString() };
+let lastSentTitle = "";
+
+function checkAzureTitle() {
+    let title = document.title || "";
+    let cleanName = title
+        .replace(" - Microsoft Azure", "")
+        .replace(" | Microsoft Azure", "")
+        .replace("Microsoft Azure", "")
+        .trim();
+
+    if (cleanName && cleanName !== lastSentTitle && cleanName !== "Home" && cleanName !== "Azure portal" && cleanName.length > 1) {
+        lastSentTitle = cleanName;
         
-        // Avoid duplicate consecutive entries
-        if (pages.length === 0 || pages[0].title !== pageTitle) {
-            pages.unshift(newEntry);
-            if (pages.length > 10) pages.pop(); // keep last 10
-            chrome.storage.local.set({ visitedPages: pages });
-        }
-    });
+        chrome.runtime.sendMessage({ action: "logPage", page: cleanName }, (response) => {
+            console.log("[Watchdog Analyzed]:", cleanName);
+        });
+    }
 }
 
-// Run every 3 seconds while browsing Azure Portal
-setInterval(reportAzureActivity, 3000);
+setInterval(checkAzureTitle, 1500);

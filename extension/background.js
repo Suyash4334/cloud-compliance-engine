@@ -1,16 +1,16 @@
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status === 'complete' && tab.url && tab.url.includes("portal.azure.com")) {
-        const pageTitle = tab.title || "Azure Portal Page";
-        const timeNow = new Date().toLocaleTimeString();
+console.log("[Azure Watchdog] Background Worker Active.");
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "logPage") {
+        fetch("http://127.0.0.1:8000/api/log-activity", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: request.page })
+        })
+        .then(res => res.json())
+        .then(data => sendResponse({ status: "success" }))
+        .catch(err => sendResponse({ status: "error" }));
         
-        // Save to chrome extension local storage
-        chrome.storage.local.get({ visitedPages: [] }, function(data) {
-            let pages = data.visitedPages;
-            if (pages.length === 0 || pages[0].title !== pageTitle) {
-                pages.unshift({ title: pageTitle, time: timeNow });
-                if (pages.length > 10) pages.pop();
-                chrome.storage.local.set({ visitedPages: pages });
-            }
-        });
+        return true;
     }
 });
