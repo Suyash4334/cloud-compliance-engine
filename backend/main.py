@@ -1,6 +1,9 @@
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI
+# pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
 import time
+from collector import AWSCloudCollector
 
 app = FastAPI(title="Cloud Compliance Engine Backend", version="2026.0")
 
@@ -29,6 +32,13 @@ security_warnings = [
 @app.get("/")
 def read_root():
     return {"message": "Cloud Compliance Engine Backend is Running!"}
+
+@app.get("/api/scan")
+@app.post("/api/scan")
+def run_cloud_scan():
+    """Trigger an on-demand cloud compliance audit across AWS / Cloud resources."""
+    collector = AWSCloudCollector()
+    return collector.scan_all()
 
 @app.get("/api/azure-audit")
 def get_azure_audit():
